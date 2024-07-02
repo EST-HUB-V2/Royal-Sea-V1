@@ -1,0 +1,247 @@
+local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV5/main/Source.Lua"))()
+
+local Window = redzlib:MakeWindow({
+  Title = "EST HUB : Royal Sea",
+  SubTitle = "by : ESTHUB Hub",
+  SaveFolder = "testando | redz lib v5.lua"
+})
+local Tab1 = Window:MakeTab({"Auto Farm", "swords"})
+local Tab2 = Window:MakeTab({"Code", "swords"})
+local Tab3 = Window:MakeTab({"Kill All", "swords"})  -- New tab for Kill All
+
+redzlib:SetTheme("Dark")
+
+-- Weapon Selection Section
+local WeaponSection = Tab1:AddSection({"Select Weapon - เลือกอาวุธ"})
+local Weaponlist = {}
+local Weapon = nil
+
+local function refreshWeaponList()
+    Weaponlist = {}
+    for _,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+        table.insert(Weaponlist,v.Name)
+    end
+end
+
+refreshWeaponList()
+
+local Dropdown = Tab1:AddDropdown({
+  Name = "Select Weapon",
+  Description = "เลือกอาวุธ",
+  Options = Weaponlist,
+  Default = nil,
+  Flag = "dropdown teste",
+  Callback = function(B)
+     Weapon = B
+  end
+})
+
+Tab1:AddButton({
+  Name = "Refresh Weapon List",
+  Description = "รีเฟรชรายการอาวุธ",
+  Callback = function()
+    refreshWeaponList()
+    Dropdown:Refresh(Weaponlist, true)
+  end
+})
+
+local Toggle1 = Tab1:AddToggle({
+  Name = "Auto Equip",
+  Description = "ออโต้ถือ",
+  Default = false,
+  Callback = function(GG)
+    AutoEquiped = GG
+  end
+})
+
+local Toggle1 = Tab1:AddToggle({
+  Name = "Auto Attack",
+  Description = "ออโต้ถือ",
+  Default = false,
+  Callback = function(GG)
+         _G.Auto = true  -- Use lowercase 't' for true
+    print('Auto Attack: ', GG)
+
+    while _G.Auto do
+        wait()
+        game:GetService('VirtualUser'):CaptureController()
+        game:GetService('VirtualUser'):Button1Down(Vector2.new(1280, 672))
+    end
+  end
+})
+
+spawn(function()
+  while wait() do
+    if AutoEquiped then
+      pcall(function()
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(Weapon))
+      end)
+    end
+  end
+end)
+
+-- Auto Farm Section
+local FarmSection = Tab1:AddSection({"Auto Farm - ออโต้ฟาม"})
+
+local Mon = {
+    "Bandit", "DountMan", "SnowBandit", "Pinkweak", "DesertBandit", "Clown", "Monkey", "SkyNewbie"
+}
+
+local Dropdown = Tab1:AddDropdown({
+  Name = "Select Mob",
+  Description = "เลือกมอน",
+  Options = Mon,
+  Default = nil,
+  Flag = "dropdown teste",
+  Callback = function(Value)
+    MonFarm = Value
+  end
+})
+
+local Toggle1 = Tab1:AddToggle({
+  Name = "Auto Farm",
+  Description = "ออโต้ฟาม",
+  Default = false,
+  Callback = function(Hee)
+    _G.a = Hee
+  end
+})
+
+function A()
+  game:GetService'VirtualUser':CaptureController()
+  game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+end
+
+spawn(function()
+  while wait() do
+    pcall(function()
+      if _G.a then
+        for _, v in pairs(game:GetService("Workspace").Mon:GetDescendants()) do
+          if v.Name == MonFarm and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 1 then
+            repeat
+              A()
+              wait()
+              game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 8)
+            until _G.a == false or v.Humanoid.Health <= 0
+          end
+        end
+      end
+    end)
+  end
+end)
+
+-- Boss Hunt Section
+local BossSection = Tab1:AddSection({"Boss Hunt - ล่าบอส"})
+
+local BossList = {
+    "StrongBandit", "Mihawk", "IceMan", "SandBoss", "SuperDountMan", "Buggy", "PinkStrong", "RoyalBoss",
+    "GorillaKing", "SkyElite", "ShadowBoss", "Alpha", "Beta", "Delta", "Eta", "Gamma", "Zata", "Epsilon"
+}
+
+local Dropdown = Tab1:AddDropdown({
+  Name = "Select Boss",
+  Description = "เลือกบอส",
+  Options = BossList,
+  Default = nil,
+  Flag = "dropdown boss",
+  Callback = function(Value)
+    BossFarm = Value
+  end
+})
+
+local Toggle2 = Tab1:AddToggle({
+  Name = "Auto Hunt Boss",
+  Description = "ออโต้ล่าบอส",
+  Default = false,
+  Callback = function(BossHunt)
+    _G.bossHunt = BossHunt
+  end
+})
+
+spawn(function()
+  while wait() do
+    pcall(function()
+      if _G.bossHunt then
+        for _, v in pairs(game:GetService("Workspace").Boss:GetDescendants()) do
+          if v.Name == BossFarm and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 1 then
+            repeat
+              A()
+              wait()
+              game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 8)
+            until _G.bossHunt == false or v.Humanoid.Health <= 0
+          end
+        end
+      end
+    end)
+  end
+end)
+
+-- Boss Hunt Section
+local BossSection = Tab1:AddSection({"Boss Hunt - ล่าบอส"})
+
+local ExcludeBosses = {
+    "Alpha", "Beta", "Delta", "Eta", "Gamma", "Zata", "Epsilon"
+}
+
+local Toggle2 = Tab1:AddToggle({
+  Name = "Auto Hunt Boss",
+  Description = "ออโต้ล่าบอส",
+  Default = false,
+  Callback = function(BossHunt)
+    _G.bossHunt = BossHunt
+    if BossHunt then
+      spawn(function()
+        while _G.bossHunt do
+          wait()
+          for _, v in pairs(game:GetService("Workspace").Boss:GetChildren()) do
+            local bossName = v.Name
+            if not table.find(ExcludeBosses, bossName) and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 1 then
+              repeat
+                A()
+                wait()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 8)
+              until not _G.bossHunt or v.Humanoid.Health <= 0
+            end
+          end
+        end
+      end)
+    end
+  end
+})
+
+-- Kill All Section
+local KillAllSection = Tab3:AddSection({"Kill All - ฆ่าทุกคน"})
+
+local Toggle3 = Tab3:AddToggle({
+  Name = "Kill All",
+  Description = "ฆ่าทุกคน",
+  Default = false,
+  Callback = function(KillAll)
+    getgenv().G = KillAll
+    spawn(function()
+      while getgenv().G do
+        wait(1)
+        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
+        sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
+        for _, d in pairs(game:GetService("Workspace"):GetDescendants()) do
+          if d.ClassName == 'Humanoid' and d.Parent.Name ~= game.Players.LocalPlayer.Name then
+            d.Health = 0
+          end
+        end
+      end
+    end)
+  end
+})
+
+-- Code Redeeming Section
+local CodeSection = Tab2:AddSection({"Code - โค้ด"})
+
+Tab2:AddButton({
+  Name = "Redeem All Codes",
+  Callback = function()
+    for _, v in pairs(game:GetService("Players").LocalPlayer.CodesFolder:GetChildren()) do
+      local args = { [1] = v.Name }
+      game:GetService("ReplicatedStorage").CodesRemotes.CodeRedeemed:FireServer(unpack(args))
+    end
+  end
+})
