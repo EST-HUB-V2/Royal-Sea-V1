@@ -84,7 +84,7 @@ end)
 local FarmSection = Tab1:AddSection({"Auto Farm - ออโต้ฟาม"})
 
 local Mon = {
-    "Bandit", "DountMan", "SnowBandit", "Pinkweak", "DesertBandit", "Clown", "Monkey", "SkyNewbie"
+    "Bandit", "DonutMan", "SnowBandit", "PinkWeak", "DesertBandit", "Clown", "Monkey", "SkyNewbie"
 }
 
 local Dropdown = Tab1:AddDropdown({
@@ -134,7 +134,7 @@ end)
 local BossSection = Tab1:AddSection({"Boss Hunt - ล่าบอส"})
 
 local BossList = {
-    "StrongBandit", "Mihawk", "IceMan", "SandBoss", "SuperDountMan", "Buggy", "PinkStrong", "RoyalBoss",
+    "StrongBandit", "Mihawk", "IceMan", "SandBoss", "SuperDonutMan", "Buggy", "PinkStrong", "RoyalBoss",
     "GorillaKing", "SkyElite", "ShadowBoss", "Alpha", "Beta", "Delta", "Eta", "Gamma", "Zata", "Epsilon"
 }
 
