@@ -1,122 +1,10 @@
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 200, 0, 100)
-frame.Position = UDim2.new(0.5, -100, 0.5, -50)
-frame.BackgroundColor3 = Color3.new(1, 1, 1)
-frame.Parent = screenGui
-
-local title = Instance.new("TextLabel")
-title.Size = UDim2.new(1, 0, 0, 20)
-title.Position = UDim2.new(0, 0, 0, -20)
-title.Text = "Universal Key System Script"
-title.TextColor3 = Color3.new(1, 1, 1)
-title.BackgroundColor3 = Color3.new(0, 0, 0)
-title.Parent = frame
-
-local dragging
-local dragInput
-local dragStart
-local startPos
-
-local function update(input)
-    local delta = input.Position - dragStart
-    frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-end
-
-title.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = frame.Position
-
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
-    end
-end)
-
-title.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        dragInput = input
-    end
-end)
-
-title.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = false
-        dragInput = nil
-    end
-end)
-
-game:GetService("UserInputService").InputChanged:Connect(function(input)
-    if input == dragInput and dragging then
-        update(input)
-    end
-end)
-
-local KeySystem = Instance.new("TextBox")
-KeySystem.Size = UDim2.new(1, 0, 0.5, 0)
-KeySystem.Position = UDim2.new(0, 0, 0, 0)
-KeySystem.Text = "Enter the Key"
-KeySystem.TextColor3 = Color3.new(0, 0, 0)
-KeySystem.BackgroundTransparency = 0.5
-KeySystem.BackgroundColor3 = Color3.new(1, 1, 1)
-KeySystem.TextWrapped = true
-KeySystem.Parent = frame
-
-local SubmitButton = Instance.new("TextButton")
-SubmitButton.Size = UDim2.new(0.5, 0, 0.5, 0)
-SubmitButton.Position = UDim2.new(0, 0, 0.5, 0)
-SubmitButton.Text = "Submit"
-SubmitButton.Parent = frame
-
-local CloseButton = Instance.new("TextButton")
-CloseButton.Size = UDim2.new(0, 20, 0, 20)
-CloseButton.Position = UDim2.new(1, -20, 0, 0)
-CloseButton.Text = "X"
-CloseButton.TextColor3 = Color3.new(1, 1, 1)
-CloseButton.BackgroundColor3 = Color3.new(1, 0, 0)
-CloseButton.Parent = frame
-
-CloseButton.MouseButton1Click:Connect(function()
-    screenGui:Destroy()
-end)
-
-local GetKeyButton = Instance.new("TextButton")
-GetKeyButton.Size = UDim2.new(0.5, 0, 0.5, 0)
-GetKeyButton.Position = UDim2.new(0.5, 0, 0.5, 0)
-GetKeyButton.Text = "Get Key"
-GetKeyButton.Parent = frame
-
-SubmitButton.MouseButton1Click:Connect(function()
-    local enteredKey = KeySystem.Text
-    if enteredKey == "ESTHUB-EGBESG" then
-        screenGui:Destroy()
-
-        -- Insert your script here to run when the correct key is entered
-        print("Key accepted. Running script...")
-    else
-        print("Invalid key. Please enter a valid key.")
-    end
-end)
-
-GetKeyButton.MouseButton1Click:Connect(function()
-    setclipboard("ESTHUB-EGBESG")
-end)
-
--- RedzLib Setup
 local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV5/main/Source.Lua"))()
 
 local Window = redzlib:MakeWindow({
-    Title = "EST HUB : Royal Sea",
-    SubTitle = "by : ESTHUB Hub",
-    SaveFolder = "testando | redz lib v5.lua"
+  Title = "EST HUB : Royal Sea",
+  SubTitle = "by : ESTHUB Hub",
+  SaveFolder = "testando | redz lib v5.lua"
 })
-
 local Tab1 = Window:MakeTab({"Auto Farm", "swords"})
 local Tab2 = Window:MakeTab({"Code", "swords"})
 local Tab3 = Window:MakeTab({"Kill All", "swords"})  -- New tab for Kill All
@@ -126,69 +14,68 @@ redzlib:SetTheme("Dark")
 -- Weapon Selection Section
 local WeaponSection = Tab1:AddSection({"Select Weapon - เลือกอาวุธ"})
 local Weaponlist = {}
+local Weapon = nil
 
 local function refreshWeaponList()
     Weaponlist = {}
     for _,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-        table.insert(Weaponlist, v.Name)
+        table.insert(Weaponlist,v.Name)
     end
 end
 
 refreshWeaponList()
 
 local Dropdown = Tab1:AddDropdown({
-    Name = "Select Weapon",
-    Description = "เลือกอาวุธ",
-    Options = Weaponlist,
-    Default = nil,
-    Flag = "dropdown teste",
-    Callback = function(B)
-        Weapon = B
-    end
+  Name = "Select Weapon",
+  Description = "เลือกอาวุธ",
+  Options = Weaponlist,
+  Default = nil,
+  Flag = "dropdown teste",
+  Callback = function(B)
+     Weapon = B
+  end
 })
 
 Tab1:AddButton({
-    Name = "Refresh Weapon List",
-    Description = "รีเฟรชรายการอาวุธ",
-    Callback = function()
-        refreshWeaponList()
-        Dropdown:Refresh(Weaponlist, true)
-    end
+  Name = "Refresh Weapon List",
+  Description = "รีเฟรชรายการอาวุธ",
+  Callback = function()
+    refreshWeaponList()
+    Dropdown:Refresh(Weaponlist, true)
+  end
 })
-
-local AutoEquiped = false  -- Ensure this is defined here
 
 local Toggle1 = Tab1:AddToggle({
-    Name = "Auto Equip",
-    Description = "ออโต้ถือ",
-    Default = false,
-    Callback = function(GG)
-        AutoEquiped = GG
-    end
+  Name = "Auto Equip",
+  Description = "ออโต้ถือ",
+  Default = false,
+  Callback = function(GG)
+    AutoEquiped = GG
+  end
 })
 
-local Toggle2 = Tab1:AddToggle({
-    Name = "Auto Attack",
-    Description = "ออโต้ถือ",
-    Default = false,
-    Callback = function(GG)
-        _G.Auto = GG
-        while _G.Auto do
-            wait()
-            game:GetService('VirtualUser'):CaptureController()
-            game:GetService('VirtualUser'):Button1Down(Vector2.new(1280, 672))
-        end
+local Toggle1 = Tab1:AddToggle({
+  Name = "Auto Attack",
+  Description = "ออโต้ถือ",
+  Default = false,
+  Callback = function(GG)
+         _G.Auto = GG
+    while _G.Auto do
+        wait()
+        game:GetService('VirtualUser'):CaptureController()
+        game:GetService('VirtualUser'):Button1Down(Vector2.new(1280, 672))
     end
+  end
 })
 
 spawn(function()
-    while wait() do
-        if AutoEquiped then
-            pcall(function()
-                game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(Weapon))
-            end)
-        end
+  while wait() do
+    if AutoEquiped then
+      pcall(function()
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(Weapon))
+      end)
     end
+  end
 end)
 
 -- Auto Farm Section
@@ -198,47 +85,47 @@ local Mon = {
     "Bandit", "DonutMan", "SnowBandit", "PinkWeak", "DesertBandit", "Clown", "Monkey", "SkyNewbie"
 }
 
-local Dropdown2 = Tab1:AddDropdown({
-    Name = "Select Mob",
-    Description = "เลือกมอน",
-    Options = Mon,
-    Default = nil,
-    Flag = "dropdown teste",
-    Callback = function(Value)
-        MonFarm = Value
-    end
+local Dropdown = Tab1:AddDropdown({
+  Name = "Select Mob",
+  Description = "เลือกมอน",
+  Options = Mon,
+  Default = nil,
+  Flag = "dropdown teste",
+  Callback = function(Value)
+    MonFarm = Value
+  end
 })
 
-local Toggle3 = Tab1:AddToggle({
-    Name = "Auto Farm",
-    Description = "ออโต้ฟาม",
-    Default = false,
-    Callback = function(Hee)
-        _G.a = Hee
-    end
+local Toggle1 = Tab1:AddToggle({
+  Name = "Auto Farm",
+  Description = "ออโต้ฟาม",
+  Default = false,
+  Callback = function(Hee)
+    _G.a = Hee
+  end
 })
 
-local function A()
-    game:GetService('VirtualUser'):CaptureController()
-    game:GetService('VirtualUser'):Button1Down(Vector2.new(1280, 672))
+function A()
+  game:GetService'VirtualUser':CaptureController()
+  game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 end
 
 spawn(function()
-    while wait() do
-        pcall(function()
-            if _G.a then
-                for _, v in pairs(game:GetService("Workspace").Mon:GetDescendants()) do
-                    if v.Name == MonFarm and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 1 then
-                        repeat
-                            A()
-                            wait()
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 8)
-                        until _G.a == false or v.Humanoid.Health <= 0
-                    end
-                end
-            end
-        end)
-    end
+  while wait() do
+    pcall(function()
+      if _G.a then
+        for _, v in pairs(game:GetService("Workspace").Mon:GetDescendants()) do
+          if v.Name == MonFarm and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 1 then
+            repeat
+              A()
+              wait()
+              game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 8)
+            until _G.a == false or v.Humanoid.Health <= 0
+          end
+        end
+      end
+    end)
+  end
 end)
 
 -- Boss Hunt Section
@@ -246,8 +133,53 @@ local BossSection = Tab1:AddSection({"Boss Hunt - ล่าบอส"})
 
 local BossList = {
     "StrongBandit", "Mihawk", "IceMan", "SandBoss", "SuperDonutMan", "Buggy", "PinkStrong", "RoyalBoss",
-    "GorillaKing", "SkyElite", "ShadowBoss", "Alpha",
- }
+    "GorillaKing", "SkyElite", "ShadowBoss", "Alpha", "Beta", "Delta", "Eta", "Gamma", "Zata", "Epsilon"
+}
+
+local Dropdown = Tab1:AddDropdown({
+  Name = "Select Boss",
+  Description = "เลือกบอส",
+  Options = BossList,
+  Default = nil,
+  Flag = "dropdown boss",
+  Callback = function(Value)
+    BossFarm = Value
+  end
+})
+
+local Toggle2 = Tab1:AddToggle({
+  Name = "Auto Hunt Boss",
+  Description = "ออโต้ล่าบอส",
+  Default = false,
+  Callback = function(BossHunt)
+    _G.bossHunt = BossHunt
+  end
+})
+
+spawn(function()
+  while wait() do
+    pcall(function()
+      if _G.bossHunt then
+        for _, v in pairs(game:GetService("Workspace").Boss:GetDescendants()) do
+          if v.Name == BossFarm and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 1 then
+            repeat
+              A()
+              wait()
+              game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 8)
+            until _G.bossHunt == false or v.Humanoid.Health <= 0
+          end
+        end
+      end
+    end)
+  end
+end)
+
+-- Boss Hunt Section
+local BossSection = Tab1:AddSection({"Boss Hunt - ล่าบอส"})
+
+local ExcludeBosses = {
+    "Alpha", "Beta", "Delta", "Eta", "Gamma", "Zata", "Epsilon"
+}
 
 local Toggle2 = Tab1:AddToggle({
   Name = "Auto Hunt Boss",
