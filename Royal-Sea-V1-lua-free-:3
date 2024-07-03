@@ -105,7 +105,6 @@ end)
 GetKeyButton.MouseButton1Click:Connect(function()
  setclipboard("") 
 end
-})
 
 local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV5/main/Source.Lua"))()
 
