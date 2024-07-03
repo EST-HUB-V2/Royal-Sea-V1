@@ -105,6 +105,8 @@ end)
 GetKeyButton.MouseButton1Click:Connect(function()
  setclipboard("") 
 end
+end
+})
 
 local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV5/main/Source.Lua"))()
 
@@ -167,9 +169,7 @@ local Toggle1 = Tab1:AddToggle({
   Description = "ออโต้ถือ",
   Default = false,
   Callback = function(GG)
-    _G.Auto = GG  -- Ensure _G.Auto is set properly
-    print('Auto Attack: ', GG)
-
+    _G.Auto = GG
     while _G.Auto do
       wait()
       game:GetService('VirtualUser'):CaptureController()
