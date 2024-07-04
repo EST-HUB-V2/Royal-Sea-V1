@@ -133,8 +133,8 @@ end)
 local BossSection = Tab1:AddSection({"Boss Hunt - ล่าบอส"})
 
 local BossList = {
-    "StrongBandit", "Mihawk", "IceMan", "SandBoss", "SuperDonutMan", "Buggy", "PinkStrong", "RoyalBoss",
-    "GorillaKing", "SkyElite", "ShadowBoss", "Alpha", "Beta", "Delta", "Eta", "Gamma", "Zata", "Epsilon"
+    "StrongBandit", "Rengoku", "SeaWorm", "Mihawk", "IceMan", "SandBoss", "SuperDonutMan", "Buggy", "PinkStrong", "RoyalBoss",
+    "GorillaKing", "SkyElite", "ShadowBoss", "Alpha", "Beta", "Delta", "Eta", "Gamma", "Zeta", "Epsilon"
 }
 
 local Dropdown = Tab1:AddDropdown({
@@ -179,7 +179,7 @@ end)
 local BossSection = Tab1:AddSection({"Boss Hunt - ล่าบอส"})
 
 local ExcludeBosses = {
-    "Alpha", "SuperDonutMan", "Beta", "Delta", "Eta", "Gamma", "Zata", "Epsilon"
+    "Alpha", "SuperDonutMan", "Beta", "Delta", "Eta", "Gamma", "Zeta", "Epsilon"
 }
 
 local Toggle2 = Tab1:AddToggle({
